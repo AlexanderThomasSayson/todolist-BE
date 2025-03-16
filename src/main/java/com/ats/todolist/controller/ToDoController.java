@@ -6,6 +6,10 @@ import com.ats.todolist.utils.ApiResponse;
 import com.ats.todolist.utils.DefaultResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("api/v1/todos")
@@ -61,5 +69,26 @@ public class ToDoController {
     public ApiResponse<ToDoDto> completeToDo(@PathVariable("id") Long id){
         ToDoDto completeToDo = toDoService.completeToDo(id);
         return DefaultResponse.displayUpdatedObject(completeToDo);
+    }
+
+    @Operation(summary = "Search To-Do task with pagination", description = "This endpoint retrieves all to-do with pagination")
+    @GetMapping("/search")
+    public ApiResponse<Page<ToDoDto>> searchToDos(
+        @RequestParam(required = false) String keyword,
+        @RequestParam(required = false) String startDate,
+        @RequestParam(required = false) String endDate,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "dateCreated") String sortBy,
+        @RequestParam(defaultValue = "desc") String sortDirection
+    ){
+        LocalDateTime startDateTime = (startDate != null) ? LocalDateTime.parse(startDate, DateTimeFormatter.ISO_DATE_TIME) : null;
+        LocalDateTime endDateTime = (endDate != null) ? LocalDateTime.parse(endDate, DateTimeFormatter.ISO_DATE_TIME) : null;
+
+        Sort sort = sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<ToDoDto> searchToDo = toDoService.searchToDos(keyword, startDateTime, endDateTime, pageable);
+        return DefaultResponse.displayFoundObject(searchToDo);
     }
 }
