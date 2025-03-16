@@ -33,10 +33,10 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("ToDoList v1.0.0")
+                        .title("To-Do List API v1.0.0")
                         .version("1.0")
                         .description("""
-                                API documentation for ToDoList Spring Boot project.
+                                API documentation for To-Do List Spring Boot project.
                                 
                                 **Developer:**
                                 - Alexander Thomas Sayson
