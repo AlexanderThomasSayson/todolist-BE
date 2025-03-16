@@ -48,15 +48,15 @@ public class SecurityConfig {
 
     // User-Only Endpoints
     private static final String[] USER_ENDPOINTS = {
-            "/api/v1/toDos/complete/{id}"
+            "/api/v1/todos/complete/{id}"
     };
 
     // Admin-Only Endpoints
     private static final String[] ADMIN_ENDPOINTS = {
-            "/api/v1/toDos/create",
-            "/api/v1/toDos/update/{id}",
-            "/api/v1/toDos/getById/{id}",
-            "/api/v1/toDos/soft-delete/{id}"
+            "/api/v1/todos/create",
+            "/api/v1/todos/update/{id}",
+            "/api/v1/todos/getById/{id}",
+            "/api/v1/todos/soft-delete/{id}"
     };
 
     @Bean
