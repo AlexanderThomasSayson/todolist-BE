@@ -1,7 +1,6 @@
 package com.ats.todolist.controller;
 
 import com.ats.todolist.dto.ToDoDto;
-import com.ats.todolist.entity.ToDo;
 import com.ats.todolist.service.ToDoService;
 import com.ats.todolist.utils.ApiResponse;
 import com.ats.todolist.utils.DefaultResponse;
@@ -10,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,9 +49,17 @@ public class ToDoController {
         return DefaultResponse.displayUpdatedObject(updateToDO);
     }
 
+    @Operation(summary = "Soft Delete task", description = "This endpoint soft delete a ToDo task by its ID")
     @DeleteMapping("/soft-delete/{id}")
     public ApiResponse<ToDoDto> softDeleteToDo(@PathVariable("id") Long id){
         ToDoDto softDeleteToDo = toDoService.softDeleteToDo(id);
         return DefaultResponse.displayUpdatedObject(softDeleteToDo);
+    }
+
+    @Operation(summary = "Complete ToDo task", description = "This endpoint marks a ToDo task as completed by its ID")
+    @PatchMapping("complete/{id}")
+    public ApiResponse<ToDoDto> completeToDo(@PathVariable("id") Long id){
+        ToDoDto completeToDo = toDoService.completeToDo(id);
+        return DefaultResponse.displayUpdatedObject(completeToDo);
     }
 }

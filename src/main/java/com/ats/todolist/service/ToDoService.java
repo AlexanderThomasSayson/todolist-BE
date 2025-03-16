@@ -11,4 +11,6 @@ public interface ToDoService {
     ToDoDto updateToDo(ToDoDto toDoDto, Long id);
 
     ToDoDto softDeleteToDo(Long id);
+
+    ToDoDto completeToDo(Long id);
 }

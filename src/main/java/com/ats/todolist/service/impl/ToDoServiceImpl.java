@@ -3,6 +3,7 @@ package com.ats.todolist.service.impl;
 import com.ats.todolist.dao.ToDoDao;
 import com.ats.todolist.dto.ToDoDto;
 import com.ats.todolist.entity.ToDo;
+import com.ats.todolist.exception.ResourceNotFoundException;
 import com.ats.todolist.service.ToDoService;
 import com.ats.todolist.utils.constants.ErrorMessages;
 import com.ats.todolist.utils.mapper.ToDoMapper;
@@ -60,5 +61,16 @@ public class ToDoServiceImpl implements ToDoService {
 
         ToDo softDeleteToDo = toDoDao.save(toDo);
         return toDoMapper.mapToDto(softDeleteToDo);
+    }
+
+    @Override
+    public ToDoDto completeToDo(Long id) {
+        ToDo toDo = toDoDao.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format(ErrorMessages.TASK_NOT_FOUND,id))
+                );
+        toDo.setCompleted(true);
+
+        ToDo updatedToDo = toDoDao.save(toDo);
+        return toDoMapper.mapToDto(updatedToDo);
     }
 }
