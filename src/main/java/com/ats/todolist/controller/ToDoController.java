@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/toDos")
-@Tag(name = "To Do List Controller", description = "Controller for managing to do list operations")
+@RequestMapping("api/v1/todos")
+@Tag(name = "To-Do List Controller", description = "Controller for managing to-do list operations")
 public class ToDoController {
 
     private final ToDoService toDoService;
@@ -28,35 +28,35 @@ public class ToDoController {
         this.toDoService = toDoService;
     }
 
-    @Operation(summary = "Create ToDo task",description = "This endpoint creates a new ToDo task in the list")
+    @Operation(summary = "Create a To-Do task",description = "This endpoint creates a new To-Do task in the list")
     @PostMapping("/create")
     public ApiResponse<ToDoDto> createToDoList(@Validated @RequestBody ToDoDto toDoDto){
         ToDoDto savedToDo = toDoService.createToDo(toDoDto);
         return DefaultResponse.displayCreatedObject(savedToDo);
     }
 
-    @Operation(summary = "Get ToDo task by Id", description = "This endpoint retrieves a ToDo task by its ID")
+    @Operation(summary = "Get To-Do task by Id", description = "This endpoint retrieves a To-Do task by its ID")
     @GetMapping("/getById/{id}")
     public ApiResponse<ToDoDto> getToDoById(@PathVariable("id") Long id) {
         ToDoDto toDoDto = toDoService.getToDoById(id);
         return DefaultResponse.displayFoundObject(toDoDto);
     }
 
-    @Operation(summary = "Update ToDo task", description = "This endpoint update a ToDo task by its ID")
+    @Operation(summary = "Update To-Do task", description = "This endpoint update a To-Do task by its ID")
     @PutMapping("/update/{id}")
     public ApiResponse<ToDoDto> updateToDo(@Validated @RequestBody ToDoDto toDoDto, @PathVariable("id") Long id){
         ToDoDto updateToDO = toDoService.updateToDo(toDoDto, id);
         return DefaultResponse.displayUpdatedObject(updateToDO);
     }
 
-    @Operation(summary = "Soft Delete task", description = "This endpoint soft delete a ToDo task by its ID")
+    @Operation(summary = "Soft Delete task", description = "This endpoint soft delete a To-Do task by its ID")
     @DeleteMapping("/soft-delete/{id}")
     public ApiResponse<ToDoDto> softDeleteToDo(@PathVariable("id") Long id){
         ToDoDto softDeleteToDo = toDoService.softDeleteToDo(id);
         return DefaultResponse.displayUpdatedObject(softDeleteToDo);
     }
 
-    @Operation(summary = "Complete ToDo task", description = "This endpoint marks a ToDo task as completed by its ID")
+    @Operation(summary = "Complete To-Do task", description = "This endpoint marks a To-Do task as completed by its ID")
     @PatchMapping("complete/{id}")
     public ApiResponse<ToDoDto> completeToDo(@PathVariable("id") Long id){
         ToDoDto completeToDo = toDoService.completeToDo(id);
