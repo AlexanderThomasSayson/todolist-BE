@@ -1,7 +1,7 @@
 package com.ats.todolist.config;
 
-import com.ats.todolist.dao.RoleDao;
-import com.ats.todolist.entity.Role;
+import com.ats.todolist.domain.dao.RoleDao;
+import com.ats.todolist.domain.entity.Role;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package com.ats.todolist.security;
 
-import com.ats.todolist.dao.UserDao;
-import com.ats.todolist.entity.User;
+import com.ats.todolist.domain.dao.UserDao;
+import com.ats.todolist.domain.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
